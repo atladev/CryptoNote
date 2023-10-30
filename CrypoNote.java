@@ -40,3 +40,26 @@ public class CryptoNote {
             }
         }
     }
+    
+    private static void gerarChaveSecreta() {
+        try {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            chaveSecreta = keyGenerator.generateKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void criarNota(Scanner scanner) {
+        System.out.println("Digite sua nota:");
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+        String textoNota = scanner.nextLine();
+
+        // Criptografar a nota
+        byte[] notaCriptografada = criptografar(textoNota.getBytes());
+
+        // Armazenar nota criptografada
+        notas.append(Base64.getEncoder().encodeToString(notaCriptografada)).append("\n");
+
+        System.out.println("Nota criada com sucesso!");
+    }
