@@ -63,3 +63,16 @@ public class CryptoNote {
 
         System.out.println("Nota criada com sucesso!");
     }
+    
+    private static void visualizarNotas() {
+        System.out.println("\nNotas:");
+
+        // Descriptografar e exibir as notas
+        String[] notasArray = notas.toString().split("\n");
+        for (String notaCriptografada : notasArray) {
+            if (!notaCriptografada.isEmpty()) {
+                byte[] notaDescriptografada = descriptografar(Base64.getDecoder().decode(notaCriptografada));
+                System.out.println(new String(notaDescriptografada));
+            }
+        }
+    }
