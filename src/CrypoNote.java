@@ -76,3 +76,14 @@ public class CryptoNote {
             }
         }
     }
+    
+    private static byte[] criptografar(byte[] dados) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, chaveSecreta);
+            return cipher.doFinal(dados);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
