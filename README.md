@@ -1,4 +1,4 @@
-# CryptoNote (Under Construction)
+# CryptoNote (1.00)
 
 Welcome to CryptoNote, a simple Java application for creating and viewing encrypted notes.
 

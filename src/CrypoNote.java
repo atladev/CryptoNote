@@ -87,3 +87,15 @@ public class CryptoNote {
             return null;
         }
     }
+
+    private static byte[] descriptografar(byte[] dados) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, chaveSecreta);
+            return cipher.doFinal(dados);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
