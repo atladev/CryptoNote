@@ -98,4 +98,31 @@ public class CryptoNote {
             return null;
         }
     }
+
+    private static void mainMenu(Scanner scanner) {
+        System.out.println("\nEscolha uma opção:");
+        System.out.println("1. Criar nota");
+        System.out.println("2. Visualizar notas");
+        System.out.println("3. Sair");
+
+        int escolha = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+
+        switch (escolha) {
+            case 1:
+                criarNota(scanner);
+                break;
+            case 2:
+                visualizarNotas();
+                break;
+            case 3:
+                System.out.println("Saindo do aplicativo. Até logo!");
+                System.exit(0);
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+        }
+
+        // Após a escolha, exibimos novamente o menu principal
+        mainMenu(scanner);
+    }
 }
