@@ -17,6 +17,8 @@ public class CryptoNote {
 
         gerarChaveSecreta(); // Generate the secret key for encryption
 
+        mainMenu(scanner);
+
         while (true) {
             System.out.println("\nchoose an option:");
             System.out.println("1. Create note");
@@ -125,4 +127,6 @@ public class CryptoNote {
         // Após a escolha, exibimos novamente o menu principal
         mainMenu(scanner);
     }
+
+    
 }
