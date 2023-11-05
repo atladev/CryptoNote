@@ -3,11 +3,13 @@ import java.security.Key;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import java.util.Base64;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CryptoNote {
 
     private static Key chaveSecreta;
-    private static StringBuilder notas = new StringBuilder();
+    private static StringBuilder notes = new StringBuilder();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -22,7 +24,7 @@ public class CryptoNote {
         while (true) {
             System.out.println("\nchoose an option:");
             System.out.println("1. Create note");
-            System.out.println("2. My notes");
+            System.out.println("2. View notes");
             System.out.println("3. Exit");
 
             int escolha = scanner.nextInt();
