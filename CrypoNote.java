@@ -8,127 +8,112 @@ import java.time.format.DateTimeFormatter;
 
 public class CryptoNote {
 
-    private static Key chaveSecreta;
+    private static Key secretKey;
     private static StringBuilder notes = new StringBuilder();
 
     public static void main(String[] args) {
+        Main.initiateApp();
+    }
+
+    public static void initiateApp() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to CryptoNote!");
 
+        // Generate secret key for encryption
+        generateSecretKey();
 
-        gerarChaveSecreta(); // Generate the secret key for encryption
-
+        // Call the main menu
         mainMenu(scanner);
-
-        while (true) {
-            System.out.println("\nchoose an option:");
-            System.out.println("1. Create note");
-            System.out.println("2. View notes");
-            System.out.println("3. Exit");
-
-            int escolha = scanner.nextInt();
-
-            switch (escolha) {
-                case 1:
-                    criarNota(scanner);
-                    break;
-                case 2:
-                    visualizarNotas();
-                    break;
-                case 3:
-                    System.out.println("Exiting the app. See you later!");
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid option. Try again.");
-            }
-        }
-    }
-    
-    private static void gerarChaveSecreta() {
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            chaveSecreta = keyGenerator.generateKey();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void criarNota(Scanner scanner) {
-        System.out.println("Digite sua nota:");
-        scanner.nextLine(); // Consumir a quebra de linha pendente
-        String textoNota = scanner.nextLine();
-
-        // Criptografar a nota
-        byte[] notaCriptografada = criptografar(textoNota.getBytes());
-
-        // Armazenar nota criptografada
-        notas.append(Base64.getEncoder().encodeToString(notaCriptografada)).append("\n");
-
-        System.out.println("Nota criada com sucesso!");
-    }
-    
-    private static void visualizarNotas() {
-        System.out.println("\nNotas:");
-
-        // Descriptografar e exibir as notas
-        String[] notasArray = notas.toString().split("\n");
-        for (String notaCriptografada : notasArray) {
-            if (!notaCriptografada.isEmpty()) {
-                byte[] notaDescriptografada = descriptografar(Base64.getDecoder().decode(notaCriptografada));
-                System.out.println(new String(notaDescriptografada));
-            }
-        }
-    }
-    
-    private static byte[] criptografar(byte[] dados) {
-        try {
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, chaveSecreta);
-            return cipher.doFinal(dados);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private static byte[] descriptografar(byte[] dados) {
-        try {
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, chaveSecreta);
-            return cipher.doFinal(dados);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private static void mainMenu(Scanner scanner) {
-        System.out.println("\nEscolha uma opção:");
-        System.out.println("1. Criar nota");
-        System.out.println("2. Visualizar notas");
-        System.out.println("3. Sair");
+        System.out.println("\nChoose an option:");
+        System.out.println("1. Create note");
+        System.out.println("2. View notes");
+        System.out.println("3. Exit");
 
-        int escolha = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha pendente
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the pending newline
 
-        switch (escolha) {
+        switch (choice) {
             case 1:
-                criarNota(scanner);
+                createNote(scanner);
                 break;
             case 2:
-                visualizarNotas();
+                viewNotes();
                 break;
             case 3:
-                System.out.println("Saindo do aplicativo. Até logo!");
+                System.out.println("Exiting the application. Goodbye!");
                 System.exit(0);
             default:
-                System.out.println("Opção inválida. Tente novamente.");
+                System.out.println("Invalid option. Please try again.");
         }
 
-        // Após a escolha, exibimos novamente o menu principal
+        // After the choice, display the main menu again
         mainMenu(scanner);
     }
 
-    
+    private static void generateSecretKey() {
+        try {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            secretKey = keyGenerator.generateKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createNote(Scanner scanner) {
+        System.out.println("Enter your note:");
+        scanner.nextLine(); // Consume the pending newline
+        String noteText = scanner.nextLine();
+
+        // Adding date and time to the note
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String dateTime = now.format(formatter);
+
+        // Encrypt the note
+        byte[] encryptedNote = encrypt((dateTime + "\n" + noteText).getBytes());
+
+        // Store the encrypted note
+        notes.append(Base64.getEncoder().encodeToString(encryptedNote)).append("\n");
+
+        System.out.println("Note created successfully!");
+    }
+
+    private static void viewNotes() {
+        System.out.println("\nNotes:");
+
+        // Decrypt and display the notes
+        String[] notesArray = notes.toString().split("\n");
+        for (String encryptedNote : notesArray) {
+            if (!encryptedNote.isEmpty()) {
+                byte[] decryptedNote = decrypt(Base64.getDecoder().decode(encryptedNote));
+                System.out.println(new String(decryptedNote));
+            }
+        }
+    }
+
+    private static byte[] encrypt(byte[] data) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return cipher.doFinal(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static byte[] decrypt(byte[] data) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return cipher.doFinal(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
