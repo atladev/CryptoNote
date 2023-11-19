@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class CryptoNote {
 
     private static Key secretKey;
+    private static final String ACCESS_PASSWORD = "password123";
     private static StringBuilder notes = new StringBuilder();
 
     public static void main(String[] args) {
