@@ -21,6 +21,10 @@ public class CryptoNote {
 
         System.out.println("Welcome to CryptoNote!");
 
+        // Request the access password
+        System.out.println("Enter the access password:");
+        String enteredPassword = scanner.nextLine();
+
         // Generate secret key for encryption
         generateSecretKey();
 
