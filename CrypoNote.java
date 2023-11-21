@@ -24,12 +24,22 @@ public class CryptoNote {
         // Request the access password
         System.out.println("Enter the access password:");
         String enteredPassword = scanner.nextLine();
+        
+        // Verify the access password
+        if (!verifyPassword(enteredPassword)) {
+        System.out.println("Incorrect password. Exiting the application.");
+        System.exit(0);
+        }
 
         // Generate secret key for encryption
         generateSecretKey();
 
         // Call the main menu
         mainMenu(scanner);
+    }
+    
+    private static boolean verifyPassword(String enteredPassword) {
+        return enteredPassword.equals(ACCESS_PASSWORD);
     }
 
     private static void mainMenu(Scanner scanner) {
