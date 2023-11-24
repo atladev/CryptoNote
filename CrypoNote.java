@@ -6,6 +6,12 @@ import java.util.Base64;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 public class CryptoNote {
 
     private static Key secretKey;
