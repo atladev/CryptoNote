@@ -1,3 +1,5 @@
+package crypto.note;
+
 import java.util.Scanner;
 import java.security.Key;
 import javax.crypto.Cipher;
