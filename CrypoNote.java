@@ -8,11 +8,39 @@ import java.util.Base64;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+public class CryptoNoteController {
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private TextArea notesTextArea;
+
+    @FXML
+    private void loginButtonAction() {
+        // Implement the login logic here
+    }
+
+    @FXML
+    private void createNoteButtonAction() {
+        // Implement the create note logic here
+    }
+
+    @FXML
+    private void viewNotesButtonAction() {
+        // Implement the view notes logic here
+    }
+}
 
 public class CryptoNote {
 
